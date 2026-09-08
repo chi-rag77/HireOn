@@ -26,13 +26,10 @@ module.exports = async function handler(req, res) {
     }
 
     const apiKey = process.env.HOSTINGER_API_KEY;
-    const fromEmail = process.env.HOSTINGER_FROM_EMAIL;
     const toEmail =
       process.env.CONTACT_TO_EMAIL || 'saurabh.nayak@hireon.io';
 
-    if (!apiKey || !fromEmail) {
-      console.error('Missing Hostinger environment variables');
-
+    if (!apiKey) {
       return res.status(500).json({
         ok: false,
         error: 'Email service is not configured.'
@@ -43,7 +40,52 @@ module.exports = async function handler(req, res) {
     const cleanEmail = String(email).trim().slice(0, 320);
     const cleanMessage = String(message).trim().slice(0, 5000);
 
-    const emailBody = [
+    // Get the mailbox associated with the API token
+    const meResponse = await fetch(
+      'https://api.mail.hostinger.com/api/v1/me',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Accept: 'application/json'
+        }
+      }
+    );
+
+    const meResult = await meResponse.json().catch(() => ({}));
+
+    if (!meResponse.ok) {
+      console.error('Hostinger /me error:', meResponse.status, meResult);
+
+      return res.status(502).json({
+        ok: false,
+        error: 'Unable to authenticate with Hostinger Mail API.'
+      });
+    }
+
+    console.log('Hostinger /me response:', meResult);
+
+    // Find mailbox resource ID from the authenticated account
+    const mailbox =
+      meResult?.data?.mailbox ||
+      meResult?.data?.mailboxes?.[0] ||
+      meResult?.mailbox ||
+      meResult?.mailboxes?.[0];
+
+    const mailboxId =
+      mailbox?.id ||
+      mailbox?.resourceId;
+
+    if (!mailboxId) {
+      console.error('Could not find mailbox ID:', meResult);
+
+      return res.status(502).json({
+        ok: false,
+        error: 'Could not identify the Hostinger mailbox.'
+      });
+    }
+
+    const emailText = [
       'New contact enquiry from the HireOn website',
       '',
       `Name: ${cleanName}`,
@@ -55,8 +97,11 @@ module.exports = async function handler(req, res) {
       `Received: ${new Date().toISOString()}`
     ].join('\n');
 
-    const response = await fetch(
-      'https://api.mail.hostinger.com/v1/emails',
+    // Send through the authenticated Hostinger mailbox
+    const sendResponse = await fetch(
+      `https://api.mail.hostinger.com/api/v1/mailboxes/${encodeURIComponent(
+        mailboxId
+      )}/send`,
       {
         method: 'POST',
         headers: {
@@ -65,24 +110,26 @@ module.exports = async function handler(req, res) {
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          from: fromEmail,
-          to: toEmail,
+          to: [toEmail],
           subject: `New HireOn Contact Enquiry — ${cleanName}`,
-          text: emailBody,
-          reply_to: cleanEmail
+          text: emailText
         })
       }
     );
 
-    const result = await response.json().catch(() => ({}));
+    const sendResult = await sendResponse.json().catch(() => ({}));
 
-    console.log('Hostinger response:', response.status, result);
+    console.log(
+      'Hostinger send response:',
+      sendResponse.status,
+      sendResult
+    );
 
-    if (!response.ok) {
+    if (!sendResponse.ok) {
       return res.status(502).json({
         ok: false,
         error: 'Hostinger email failed.',
-        details: result
+        details: sendResult
       });
     }
 
