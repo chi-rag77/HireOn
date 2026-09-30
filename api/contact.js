@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
   try {
     const { name, email, message } = req.body || {};
 
-    if (!name || !email || !message) {
+    if (!name || !email) {
       return res.status(400).json({
         ok: false,
         error: 'Please complete all fields.'
@@ -38,7 +38,9 @@ module.exports = async function handler(req, res) {
 
     const cleanName = String(name).trim().slice(0, 200);
     const cleanEmail = String(email).trim().slice(0, 320);
-    const cleanMessage = String(message).trim().slice(0, 5000);
+    const cleanMessage = String(message || 'No additional details provided.')
+      .trim()
+      .slice(0, 5000);
 
     // Get the mailbox associated with the API token
     const meResponse = await fetch(
