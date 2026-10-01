@@ -2,6 +2,32 @@
   const refreshIcons = () => window.lucide?.createIcons();
   refreshIcons();
 
+  document.querySelectorAll('.friction-action').forEach((button) => {
+    button.addEventListener('click', () => {
+      const active = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(active));
+      button.closest('.friction-item').classList.toggle('is-resolved', active);
+      button.querySelector('span').textContent = active ? button.dataset.active : button.dataset.idle;
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const navLinks = [...document.querySelectorAll('.desktop-nav a')];
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-90px 0px -65% 0px', threshold: 0 });
+    navLinks.forEach((link) => {
+      const section = document.querySelector(link.hash);
+      if (section) navObserver.observe(section);
+    });
+  }
+
   const menuButton = document.querySelector('.menu-toggle');
   const mobileNav = document.querySelector('#mobile-nav');
 

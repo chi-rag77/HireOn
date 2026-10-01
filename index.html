@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/refinements.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -33,19 +34,49 @@
 <div class="hatch-band framed" aria-hidden="true"><span>+</span><span>+</span></div>
 
 <section class="problem-section framed" id="problem" aria-labelledby="problem-title">
-  <div class="problem-intro"><span class="mono">[ THE PROBLEM ]</span><h2 id="problem-title">Hiring moves fast.<br><em>The process doesn't.</em></h2><p>A strong candidate can enter from anywhere, then disappear into tabs, inboxes, spreadsheets, and unanswered follow-ups. Your team spends its time moving information instead of understanding people.</p></div>
-  <div class="problem-board" aria-label="A fragmented hiring process becoming difficult to manage">
-    <div class="problem-board-top"><span class="mono">TUESDAY / 09:42</span><span><i></i> Hiring operations</span></div>
-    <div class="problem-signals">
-      <article><span class="signal-icon"><i data-lucide="file-warning"></i></span><div><small>ROLE BRIEF</small><strong>Three versions.<br>No shared criteria.</strong></div><em>Needs alignment</em></article>
-      <article><span class="signal-icon"><i data-lucide="inbox"></i></span><div><small>CANDIDATES</small><strong>Profiles across<br>four different sources.</strong></div><em>Scattered</em></article>
-      <article><span class="signal-icon"><i data-lucide="message-square-dashed"></i></span><div><small>FOLLOW-UPS</small><strong>Seven candidates<br>still waiting.</strong></div><em>Overdue</em></article>
-      <article><span class="signal-icon"><i data-lucide="phone-off"></i></span><div><small>SCREENING</small><strong>Hours repeating<br>the same first call.</strong></div><em>Manual</em></article>
-    </div>
-    <div class="problem-cursor"><i data-lucide="mouse-pointer-2"></i><span>Where did the context go?</span></div>
-    <div class="problem-ticker"><span>Role_v3_FINAL.docx</span><i data-lucide="arrow-right"></i><span>candidate-list.csv</span><i data-lucide="arrow-right"></i><span>12 unread emails</span><i data-lucide="arrow-right"></i><span>interview_notes_new.xlsx</span></div>
+  <header class="friction-heading"><div><span class="mono accent">THE PROBLEM / 01</span><h2>Good people.<br><span>Lost in the process.</span></h2></div><p>Five places where hiring breaks down.<br>For HR teams. For agencies. For the people waiting on the other side.</p></header>
+  <div class="friction-grid">
+    <article class="friction-item" data-friction="matches">
+      <div class="friction-meta"><span>01 / DISCOVERY</span><i data-lucide="user-search"></i></div>
+      <h3>Missed matches</h3><p>Strong candidates disappear inside a crowded inbox before anyone gives them a fair look.</p>
+      <div class="friction-visual match-visual" id="problem-matches">
+        <div class="profile-stack" aria-hidden="true"><span></span><span></span></div>
+        <div class="match-profile"><div class="profile-id"><span class="profile-glyph"><i data-lucide="user-round"></i></span><div><b>Senior Engineer</b><small>5+ years experience</small></div><i data-lucide="file-user"></i></div><div class="profile-lines"><i></i><i></i><i></i></div><div class="match-evidence"><i data-lucide="check-check"></i> Skills match the role</div><span class="profile-scan" aria-hidden="true"></span></div>
+        <div class="visual-verdict"><i data-lucide="user-round-x"></i><span class="before-copy">Overlooked<small>No interview</small></span><span class="after-copy">Match recovered<small>Ready for a fair review</small></span></div>
+      </div>
+      <button class="friction-action" type="button" aria-pressed="false" aria-controls="problem-matches" data-idle="Find the missed match" data-active="Reset candidate search"><span>Find the missed match</span><i data-lucide="arrow-up-right"></i></button>
+    </article>
+    <article class="friction-item" data-friction="criteria">
+      <div class="friction-meta"><span>02 / CONSISTENCY</span><i data-lucide="list-filter"></i></div>
+      <h3>Inconsistent shortlists</h3><p>Each recruiter screens differently, making quality harder to repeat across clients and roles.</p>
+      <div class="friction-visual criteria-visual" id="problem-criteria">
+        <div class="question-row"><span class="reviewer">AK</span><p><span class="before-copy">Tell me about your experience.</span><span class="after-copy">Product judgment</span></p><i data-lucide="check"></i></div>
+        <div class="question-row"><img src="assets/interview-candidate.png" alt=""><p><span class="before-copy">How do you solve this problem?</span><span class="after-copy">Product judgment</span></p><i data-lucide="check"></i></div>
+        <div class="question-row"><span class="reviewer">RM</span><p><span class="before-copy">Walk me through a project.</span><span class="after-copy">Product judgment</span></p><i data-lucide="check"></i></div>
+        <div class="criteria-baseline"><i data-lucide="sliders-horizontal"></i><span class="before-copy">Same role. Different yardsticks.</span><span class="after-copy">One shared scorecard.</span></div>
+      </div>
+      <button class="friction-action" type="button" aria-pressed="false" aria-controls="problem-criteria" data-idle="Align the criteria" data-active="Reset screening criteria"><span>Align the criteria</span><i data-lucide="arrow-up-right"></i></button>
+    </article>
+    <article class="friction-item" data-friction="scores">
+      <div class="friction-meta"><span>03 / CLARITY</span><i data-lucide="file-search"></i></div>
+      <h3>Black-box scores</h3><p>A ranking means little when recruiters cannot see the criteria and evidence behind it.</p>
+      <div class="friction-visual score-visual" id="problem-scores">
+        <div class="score-top"><span>Candidate score</span><i data-lucide="circle-help"></i></div>
+        <div class="score-center"><div class="score-dial"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="score-track" cx="50" cy="50" r="43"/><circle class="score-progress" cx="50" cy="50" r="43"/></svg><strong>56<small>/100</small></strong></div><span class="score-decision"><span class="before-copy">Not selected</span><span class="after-copy">Review in context</span></span></div>
+        <div class="score-reason"><span class="before-copy">Reason unavailable<i></i><i></i><i></i></span><span class="after-copy"><b>Experience 24/40 · Skills 32/60</b><small>Evidence incomplete. Human review needed.</small></span></div>
+      </div>
+      <button class="friction-action" type="button" aria-pressed="false" aria-controls="problem-scores" data-idle="Look behind the score" data-active="Hide score evidence"><span>Look behind the score</span><i data-lucide="arrow-up-right"></i></button>
+    </article>
+    <article class="friction-item friction-wide" data-friction="speed">
+      <div class="friction-copy"><div class="friction-meta"><span>04 / MOMENTUM</span><i data-lucide="calendar-clock"></i></div><h3>Slow submissions</h3><p>Hours spent reviewing and coordinating give the strongest candidates more time to accept another offer.</p><button class="friction-action" type="button" aria-pressed="false" aria-controls="problem-speed" data-idle="Move the conversation forward" data-active="Reset the timeline"><span>Move the conversation forward</span><i data-lucide="arrow-up-right"></i></button></div>
+      <div class="friction-visual speed-visual" id="problem-speed"><div class="week-labels"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div><div class="week-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span class="calendar-slot"><i data-lucide="check"></i></span></div><div class="schedule-event"><i data-lucide="clock-4"></i><span class="before-copy">Another offer accepted<small>The conversation came too late.</small></span><span class="after-copy">Conversation scheduled<small>Invite, reply, and next step connected.</small></span></div></div>
+    </article>
+    <article class="friction-item friction-wide" data-friction="pool">
+      <div class="friction-copy"><div class="friction-meta"><span>05 / REDISCOVERY</span><i data-lucide="database"></i></div><h3>Buried talent pools</h3><p>Past applicants and sourced candidates sit unused while recruiters start every search from zero.</p><button class="friction-action" type="button" aria-pressed="false" aria-controls="problem-pool" data-idle="Rediscover your talent" data-active="Reset the talent pool"><span>Rediscover your talent</span><i data-lucide="arrow-up-right"></i></button></div>
+      <div class="friction-visual pool-visual" id="problem-pool"><div class="pool-search"><i data-lucide="search"></i><span class="before-copy">Your existing talent pool</span><span class="after-copy">Product design · B2B</span></div><div class="pool-result"><span>PS</span><div><b>Priya Sharma</b><small>Product design · 6 years</small></div><i data-lucide="check"></i></div><div class="pool-result"><span>AM</span><div><b>Arjun Mehta</b><small>Product strategy · 7 years</small></div><i data-lucide="check"></i></div><div class="pool-result"><span>NK</span><div><b>Neha Kapoor</b><small>User research · 5 years</small></div><i data-lucide="check"></i></div><div class="pool-caption"><i data-lucide="database-zap"></i><span class="before-copy">Potential, waiting to be found.</span><span class="after-copy">Relevant people. Already in your network.</span></div></div>
+    </article>
   </div>
-  <div class="problem-bottom"><span class="mono"><span class="status-square"></span> THE COST ISN'T ANOTHER TOOL</span><p>It is the context lost between them.</p><a href="#features">See a connected workflow <i data-lucide="arrow-down"></i></a></div>
+  <div class="friction-footer"><span>Illustrative scenarios and sample candidate data.</span><a href="#outreach">Keep the conversation moving <i data-lucide="arrow-down-right"></i></a></div>
 </section>
 
 <section class="product-section framed" aria-label="HireOn workspace preview">
