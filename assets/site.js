@@ -80,6 +80,11 @@
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (['localhost','127.0.0.1',''].includes(location.hostname)) {
+      status.hidden = false;
+      status.textContent = 'This is a design preview. Nothing has been sent. Visit hireon.io to request early access.';
+      return;
+    }
     const submit = form.querySelector('button[type="submit"]');
     const data = new FormData(form);
     const note = String(data.get('message') || '').trim();
